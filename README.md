@@ -21,7 +21,7 @@
     <a href="https://lgtm.com/projects/g/badges/shields/alerts/">
         <img src="https://img.shields.io/lgtm/alerts/g/badges/shields"
             alt="Total alerts"/></a>
-    <a href="https://discord.gg/HjJCwm5">
+    <a href="https://discord.gg/MdgTD4v6">
         <img src="https://img.shields.io/discord/308323056592486420?logo=discord"
             alt="chat on Discord"></a>
     <a href="https://twitter.com/intent/follow?screen_name=pzy2000">
