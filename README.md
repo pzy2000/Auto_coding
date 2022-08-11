@@ -3,9 +3,9 @@ An auto coding tool for python,off-brand github-copliot,trained with GPT2 transf
 
 GPyT is a GPT2 model trained from scratch (not fine tuned) on Python code from Github. Overall, it was ~80GB of pure Python code, the current GPyT model is a mere 2 epochs through this data, so it may benefit greatly from continued training and/or fine-tuning.
 
-Newlines are replaced by '<N>'
+Newlines are replaced by '''<N>'''
 
-Input to the model is code, up to the context length of 1024, with newlines replaced by '<N>'
+Input to the model is code, up to the context length of 1024, with newlines replaced by '''<N>'''
 
 # Here's a quick example of using this model:
 ```python
