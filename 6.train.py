@@ -42,13 +42,16 @@ print('successfully loaded dataset!')
 
 
 def encode(lines):
-    return tokenizer(lines['text'], add_special_tokens=True, truncation=True, max_length=512)
+    return tokenizer(lines['text'], add_special_tokens=True,
+                     truncation=True, max_length=512)
 
 
 data.set_transform(encode)
 data = data['train']
 
-data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=True, mlm_probability=0.15)
+data_collator = DataCollatorForLanguageModeling(
+    tokenizer=tokenizer, mlm=True, mlm_probability=0.15
+    )
 
 training_args = TrainingArguments(
     output_dir="GPyT",

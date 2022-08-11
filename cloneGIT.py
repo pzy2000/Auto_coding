@@ -27,5 +27,6 @@ for i in range(5):
 
     for repository in result:
         print(f"{repository.clone_url}")
-        os.system(f"git clone {repository.clone_url} repos/{repository.owner.login}/{repository.name}")
+        os.system(f"git clone {repository.clone_url} "
+                  f"repos/{repository.owner.login}/{repository.name}")
         sleep(1)
