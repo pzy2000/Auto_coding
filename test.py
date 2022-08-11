@@ -1,7 +1,5 @@
 import pyWinhook
 import pythoncom
-
-global storage
 storage = ""
 
 
