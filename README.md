@@ -8,7 +8,7 @@ Newlines are replaced by <N>
 Input to the model is code, up to the context length of 1024, with newlines replaced by <N>
 
 # Here's a quick example of using this model:
-
+```python
 from transformers import AutoTokenizer, AutoModelWithLMHead
 
 tokenizer = AutoTokenizer.from_pretrained("Sentdex/GPyT")
@@ -26,10 +26,11 @@ decoded = tokenizer.decode(resp[0])
 reformatted = decoded.replace("<N>","\n")
 
 print(reformatted)
-
+```
 # Should produce:
-
+```python
 import numpy as np
 import pytest
 
 import pandas as pd<N
+```
