@@ -1,7 +1,6 @@
 from tokenizers import ByteLevelBPETokenizer
-from transformers import GPT2Config, GPT2LMHeadModel, GPT2Tokenizer, DataCollatorForLanguageModeling
+from transformers import DataCollatorForLanguageModeling, GPT2Config, GPT2LMHeadModel, GPT2Tokenizer, Trainer, TrainingArguments
 from datasets import load_dataset
-from transformers import Trainer, TrainingArguments
 
 paths = ['code_text_data.txt']
 TRAIN_BASE = False
