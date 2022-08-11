@@ -19,12 +19,15 @@ Input to the model is code, up to the context length of 1024.
   </a>
 </p>
 
-按照代码文件名中的数字顺序依次运行即可，注意把数据文件和模型放到指定位置，路径不要有中文。
+按照代码文件名中的数字顺序依次运行即可，不要忘记运行test.py!注意把数据文件和模型放到指定位置，路径不要有中文。
 
-# 模型文件
-也可以下载现成的模型直接运行7.use_model.py，享受低代码coding的乐趣！
+# 捷径
+也可以下载现成的模型直接运行7.use_model.py和test.py，享受低代码coding的乐趣！
 
 下载地址:https://huggingface.co/Sentdex/GPyT/blob/main/pytorch_model.bin
+
+# 原理
+test.py记录用户的键盘输入，并实时存入keyboard.txt，use_model.py异步读取txt中的内容，并通过训练好的模型进行预测。
 
 # Here's a quick example of using this model:
 ```python
