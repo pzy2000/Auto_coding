@@ -1,5 +1,5 @@
 from tokenizers import ByteLevelBPETokenizer
-from transformers import GPT2Config, GPT2LMHeadModel, GPT2Tokenizer
+from transformers import GPT2Tokenizer
 
 paths = ['code_text_data.txt']
 TRAIN_BASE = False

@@ -3,7 +3,6 @@ from github import Github
 import time
 from datetime import datetime
 import os
-import requests
 # 1.增加下面两行
 import urllib3
 

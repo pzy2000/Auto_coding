@@ -1,5 +1,4 @@
 import os
-import time
 from tqdm import tqdm
 
 MAX_CHAR_LENGTH = 512
