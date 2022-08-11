@@ -176,5 +176,3 @@ cython_debug/
 /GPyT_1/
 /GPyT/
 /test.py
-
-!/token.txt
