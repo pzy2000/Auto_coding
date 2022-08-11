@@ -17,14 +17,42 @@ model = GPT2LMHeadModel.from_pretrained("GPyT_1/latest_model").to("cuda")
 
 
 def encode_newlines(inp):
+    """
+
+    Args:
+        inp: 用户输入的代码段
+
+    Returns:
+        对输入进行换行符替换操作后，输出
+
+    """
     return inp.replace("\n", NEWLINECHAR)
 
 
 def decode_newlines(inp):
+    """
+
+    Args:
+        inp: 模型输出的未经处理的语句
+
+    Returns:
+        输出将鬼画符替换为换行符后的结果
+
+    """
     return inp.replace(NEWLINECHAR, "\n")
 
 
 def generate(inp, maxlength=100):
+    """
+
+    Args:
+        inp: 用户输入的代码段
+        maxlength: 处理字符的上限,默认为100
+
+    Returns:
+        模型生成的新代码 和 新代码的行数
+
+    """
     inp = encode_newlines(inp)
     newline_count = inp.count(NEWLINECHAR)
     input_ids = tokenizer.encode(inp, return_tensors="pt").to("cuda")
@@ -41,6 +69,15 @@ def generate(inp, maxlength=100):
 
 
 def auto_complete(inp, maxlength=100):
+    """
+
+    Args:
+        inp: 用户输入的代码段
+        maxlength: 处理字符的上限,默认为100
+
+    Returns:
+        模型生成的新代码
+    """
     model_output, _ = generate(inp, maxlength)
     sequence = model_output['sequences'][0]
     decoded = decode_newlines(tokenizer.decode(sequence))
@@ -48,6 +85,15 @@ def auto_complete(inp, maxlength=100):
 
 
 def stop_at_repeat(inp):
+    """
+
+    Args:
+        inp: 用户输入的代码段
+
+    Returns:
+        模型生成的新代码(不会带有重复段落)
+
+    """
     model_output = generate(inp)
     lines = model_output.splitlines(True)
     no_repeat = ""

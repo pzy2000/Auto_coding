@@ -1,6 +1,6 @@
 from tokenizers import ByteLevelBPETokenizer
 from transformers import DataCollatorForLanguageModeling, \
-    GPT2Config, GPT2LMHeadModel, GPT2Tokenizer,\
+    GPT2Config, GPT2LMHeadModel, GPT2Tokenizer, \
     Trainer, TrainingArguments
 from datasets import load_dataset
 
@@ -42,8 +42,17 @@ print('successfully loaded dataset!')
 
 
 def encode(lines):
-    return tokenizer(lines['text'], add_special_tokens=True,
-                     truncation=True, max_length=512)
+    """
+
+    Args:
+        lines: 输入的行
+
+    Returns:
+        返回token化后的结果
+    """
+    token = tokenizer(lines['text'], add_special_tokens=True,
+                      truncation=True, max_length=512)
+    return token
 
 
 data.set_transform(encode)
@@ -51,7 +60,7 @@ data = data['train']
 
 data_collator = DataCollatorForLanguageModeling(
     tokenizer=tokenizer, mlm=True, mlm_probability=0.15
-    )
+)
 
 training_args = TrainingArguments(
     output_dir="GPyT",

