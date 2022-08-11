@@ -16,6 +16,12 @@ Input to the model is code, up to the context length of 1024.
 </p>
 
 # 使用指南
+<p align="center">
+  <a href="https://raw.githubusercontent.com/nonebot/nonebot2/master/LICENSE">
+    <img src="https://img.shields.io/github/license/nonebot/nonebot2" alt="license">
+  </a>
+</p>
+
 按照代码文件名中的数字顺序依次运行即可，注意把数据文件和模型放到指定位置，路径不要有中文。
 
 # 模型文件
