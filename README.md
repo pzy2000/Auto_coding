@@ -1,6 +1,10 @@
 # Auto_coding
 
-[![build](https://github.com/yin1999/healthreport/actions/workflows/Build.yml/badge.svg)](https://github.com/yin1999/healthreport/actions/workflows/Build.yml)[![Python Report Card](https://goreportcard.com/badge/github.com/yin1999/healthreport)](https://goreportcard.com/report/github.com/yin1999/healthreport) [![Python Reference](https://pkg.go.dev/badge/github.com/yin1999/healthreport.svg)](https://pkg.go.dev/github.com/yin1999/healthreport)
+[![build](https://github.com/yin1999/healthreport/actions/workflows/Build.yml/badge.svg)](https://github.com/yin1999/healthreport/actions/workflows/Build.yml)[![Python Report Card](https://goreportcard.com/badge/github.com/yin1999/healthreport)](https://goreportcard.com/report/github.com/yin1999/healthreport) [![Python Reference](https://pkg.go.dev/badge/github.com/yin1999/healthreport.svg)](https://pkg.go.dev/github.com/yin1999/healthreport)<p align="right">
+  <a href="https://raw.githubusercontent.com/nonebot/nonebot2/master/LICENSE">
+    <img src="https://img.shields.io/github/license/nonebot/nonebot2" alt="license">
+  </a>
+</p>
 
 An auto coding tool for python,off-brand github-copliot,trained by GPT2 transformer,fed with github public repos codes
 
@@ -16,11 +20,6 @@ Input to the model is code, up to the context length of 1024.
 </p>
 
 # 使用指南
-<p align="center">
-  <a href="https://raw.githubusercontent.com/nonebot/nonebot2/master/LICENSE">
-    <img src="https://img.shields.io/github/license/nonebot/nonebot2" alt="license">
-  </a>
-</p>
 
 按照代码文件名中的数字顺序依次运行即可，不要忘记先运行test.py(开始敲代码前)!
 
