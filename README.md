@@ -4,6 +4,8 @@ An auto coding tool for python,off-brand github-copliot,trained with GPT2 transf
 It contains a GPT2 model trained from scratch (not fine tuned) on Python code from Github. Overall, it was ~80GB of pure Python code, the current model is a mere 2 epochs through this data, so it may benefit greatly from continued training and/or fine-tuning.
 
 Input to the model is code, up to the context length of 1024.
+# 使用指南
+按照代码文件前的阿拉伯数字顺序运行即可，注意把数据文件和模型放到指定位置，路径不要有中文。
 
 # Here's a quick example of using this model:
 ```python
