@@ -1,4 +1,7 @@
 # Auto_coding
+
+[![build](https://github.com/yin1999/healthreport/actions/workflows/Build.yml/badge.svg)](https://github.com/yin1999/healthreport/actions/workflows/Build.yml)
+
 An auto coding tool for python,off-brand github-copliot,trained by GPT2 transformer,fed with github public repos codes
 
 It contains a GPT2 model trained from scratch (not fine tuned) on Python code from Github. Overall, it was ~80GB of pure Python code, the current model is a mere 2 epochs through this data, so it may benefit greatly from continued training and/or fine-tuning.
