@@ -41,7 +41,7 @@ def generate(inp, maxlength=100):
 
 
 def auto_complete(inp, maxlength=100):
-    model_output, count = generate(inp, maxlength)
+    model_output, _ = generate(inp, maxlength)
     sequence = model_output['sequences'][0]
     decoded = decode_newlines(tokenizer.decode(sequence))
     return decoded
