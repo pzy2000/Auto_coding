@@ -7,9 +7,6 @@ Input to the model is code, up to the context length of 1024.
 
 # 效果图
 <p align="center">
-  <a href="https://raw.githubusercontent.com/nonebot/nonebot2/master/LICENSE">
-    <img src="https://img.shields.io/github/license/nonebot/nonebot2" alt="license">
-  </a>
   <a>
     <img src="https://raw.githubusercontent.com/pzy2000/Auto_coding/master/album/GPT-2.png">
   </a>
