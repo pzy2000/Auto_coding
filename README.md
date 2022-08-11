@@ -9,6 +9,7 @@ Input to the model is code, up to the context length of 1024.
 
 # 模型文件
 也可以下载现成的模型直接运行7.use_model.py，享受低代码coding的乐趣！
+
 下载地址:https://huggingface.co/Sentdex/GPyT/blob/main/pytorch_model.bin
 
 # Here's a quick example of using this model:
