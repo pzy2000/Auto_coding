@@ -51,9 +51,9 @@ def stop_at_repeat(inp):
     model_output = generate(inp)
     lines = model_output.splitlines(True)
     no_repeat = ""
-    for l in lines:
-        if no_repeat.count(l) == 0 or l == "\n":
-            no_repeat += l
+    for line in lines:
+        if no_repeat.count(line) == 0 or line == "\n":
+            no_repeat += line
         else:
             return no_repeat
     return no_repeat
@@ -68,4 +68,3 @@ while True:
     except RuntimeError:
         pass
     sleep(5)
-
