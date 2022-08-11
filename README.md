@@ -30,5 +30,5 @@ print(reformatted)
 import numpy as np
 import pytest
 
-import pandas as pd<N
+import pandas as pd
 ```
