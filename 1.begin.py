@@ -1,11 +1,13 @@
 from time import sleep
 from github import Github
 
-access_token = open("token.txt", "r").read()
+
+with open("token.txt", "r") as f:
+    access_token = f.read()
 g = Github(access_token)
-print(g.get_user())
+# print(g.get_user())
 query = "pygame language:python created:2022-08-08..2022-08-09"
-print(query)
+# print(query)
 
 # query = "pygame language:python created:2022-03-01..2022-03-02"
 result = g.search_repositories(query)

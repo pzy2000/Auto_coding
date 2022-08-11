@@ -5,9 +5,9 @@ from datetime import datetime
 import os
 # 1.增加下面两行
 import urllib3
-
 urllib3.disable_warnings()
-access_token = open("token.txt", "r").read()
+with open("token.txt", "r") as f:
+    access_token = f.read()
 g = Github(access_token)
 print(g.get_user())
 end_time = time.time() - 2000000

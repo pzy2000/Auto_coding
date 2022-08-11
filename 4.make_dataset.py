@@ -17,7 +17,8 @@ print(len(full_paths))
 with open("code_text_data.txt", "a") as f:
     for fpath in full_paths:
         try:
-            data = open(fpath, 'r', encoding='utf-8').read()
+            with open(fpath, 'r', encoding='utf-8') as fuck:
+                data = fuck.read()
             fd = data.replace("\n", NEWLINECHAR)
             if 100 < len(data) <= MAX_CHAR_LENGTH:
                 # print(data)
