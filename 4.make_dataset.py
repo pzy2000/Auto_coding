@@ -21,8 +21,6 @@ with open("code_text_data.txt", "a") as f:
                 data = fuck.read()
             fd = data.replace("\n", NEWLINECHAR)
             if 100 < len(data) <= MAX_CHAR_LENGTH:
-                # print(data)
-                # print(len(data))
                 f.write(fd + '\n')
             else:
                 sd = data.split(f"{NEWLINECHAR}{NEWLINECHAR}")
