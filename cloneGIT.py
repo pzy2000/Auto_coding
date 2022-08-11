@@ -5,6 +5,7 @@ from datetime import datetime
 import os
 # 1.增加下面两行
 import urllib3
+
 urllib3.disable_warnings()
 with open("token.txt", "r") as f:
     access_token = f.read()
@@ -12,7 +13,6 @@ g = Github(access_token)
 print(g.get_user())
 end_time = time.time() - 2000000
 start_time = end_time - 86400
-
 
 for i in range(5):
     start_time_str = datetime.utcfromtimestamp(start_time).strftime("%Y-%m-%d")
@@ -22,7 +22,6 @@ for i in range(5):
     end_time -= 86400
     start_time -= 86400
     result = g.search_repositories(query)
-
 
     print(result.totalCount)
 
