@@ -1,4 +1,5 @@
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
+from time import sleep
 
 NEWLINECHAR = "<N>"
 
@@ -58,6 +59,10 @@ def stop_at_repeat(inp):
     return no_repeat
 
 
-inp = """# create a game:"""
-optimized = auto_complete(inp, 128)
-print(optimized)
+while True:
+    with open("keyboard.txt", 'r') as f:
+        inp = f.read()
+    predict = auto_complete(inp)
+    print(predict)
+    sleep(10)
+
