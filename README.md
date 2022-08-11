@@ -5,7 +5,11 @@ It contains a GPT2 model trained from scratch (not fine tuned) on Python code fr
 
 Input to the model is code, up to the context length of 1024.
 # 使用指南
-按照代码文件前的阿拉伯数字顺序运行即可，注意把数据文件和模型放到指定位置，路径不要有中文。
+按照代码文件名中的数字顺序依次运行即可，注意把数据文件和模型放到指定位置，路径不要有中文。
+
+# 模型文件
+也可以下载现成的模型直接运行7.use_model.py，享受低代码coding的乐趣！
+下载地址:https://huggingface.co/Sentdex/GPyT/blob/main/pytorch_model.bin
 
 # Here's a quick example of using this model:
 ```python
