@@ -60,9 +60,12 @@ def stop_at_repeat(inp):
 
 
 while True:
-    with open("keyboard.txt", 'r') as f:
-        inp = f.read()
-    predict = auto_complete(inp)
-    print(predict)
-    sleep(10)
+    try:
+        with open("keyboard.txt", 'r') as f:
+            inp = f.read()
+        predict = auto_complete(inp)
+        print(predict)
+    except RuntimeError:
+        pass
+    sleep(5)
 
