@@ -1,5 +1,6 @@
 from tokenizers import ByteLevelBPETokenizer
-from transformers import DataCollatorForLanguageModeling, GPT2Config, GPT2LMHeadModel, GPT2Tokenizer,\
+from transformers import DataCollatorForLanguageModeling, \
+    GPT2Config, GPT2LMHeadModel, GPT2Tokenizer,\
     Trainer, TrainingArguments
 from datasets import load_dataset
 
