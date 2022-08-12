@@ -60,4 +60,6 @@ def main():
 
 
 if __name__ == "__main__":
+    with open("keyboard.txt", "w") as f:
+        f.write("")
     main()
