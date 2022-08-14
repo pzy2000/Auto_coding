@@ -2,7 +2,7 @@ import os
 import time
 from tqdm import tqdm
 
-d = "repos"
+d = "D:/repos"
 for dirpath, dirnames, filenames in tqdm(os.walk(d)):
     '''print(dirpath)
     print(dirnames)
