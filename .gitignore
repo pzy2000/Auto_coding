@@ -172,7 +172,8 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-/repos/
-/GPyT_1/
-/GPyT/
+
 /token.txt
+/GPyT/
+/GPyT_1/
+/repos/
