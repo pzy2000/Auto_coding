@@ -3,7 +3,7 @@ from time import sleep
 
 NEWLINECHAR = "<N>"
 
-tokenizer = GPT2Tokenizer.from_pretrained('GPyT_1/GPyT_TOK_75GB')
+tokenizer = GPT2Tokenizer.from_pretrained('tokenizer')
 
 tokenizer.add_special_tokens({
     "eos_token": "</s>",
@@ -12,8 +12,7 @@ tokenizer.add_special_tokens({
     "pad_token": "<pad>",
     "mask_token": "<mask>"
 })
-
-model = GPT2LMHeadModel.from_pretrained("GPyT_1/latest_model").to("cuda")
+model = GPT2LMHeadModel.from_pretrained("GPyT_3/checkpoint-96500").to("cuda")
 
 
 def encode_newlines(inp):
@@ -105,12 +104,27 @@ def stop_at_repeat(inp):
     return no_repeat
 
 
-while True:
-    try:
-        with open("keyboard.txt", 'r') as f:
-            inpu = f.read()
-        predict = auto_complete(inpu)
-        print(predict)
-    except RuntimeError:
-        pass
-    sleep(5)
+mode = input("请输入数字,选择启动方式：1、命令行格式 2、后台钩子模式:")
+
+
+if mode == "1":
+    while True:
+        try:
+            inpu = input("> ")
+            predict = auto_complete(inpu)
+            print(predict)
+        except RuntimeError:
+            pass
+
+elif mode == "2":
+    while True:
+        try:
+            with open("keyboard.txt", 'r') as f:
+                inpu = f.read()
+            predict = auto_complete(inpu)
+            print(predict)
+        except RuntimeError:
+            pass
+        sleep(5)
+
+

@@ -33,7 +33,9 @@ tokenizer.add_special_tokens({
 config = GPT2Config(
     vocab_size=tokenizer.vocab_size,
     bos_token=tokenizer.bos_token_id,
-    eos_token=tokenizer.eos_token_id
+    eos_token=tokenizer.eos_token_id,
+    pad_token=tokenizer.pad_token_id,
+    mask_token=tokenizer.mask_token_id
 )
 model = GPT2LMHeadModel(config)
 data = load_dataset("text", data_files=paths)
@@ -63,7 +65,7 @@ data_collator = DataCollatorForLanguageModeling(
 )
 
 training_args = TrainingArguments(
-    output_dir="GPyT",
+    output_dir="GPyT_3",
     overwrite_output_dir=True,
     num_train_epochs=7,
     per_device_train_batch_size=10,
@@ -81,4 +83,4 @@ trainer = Trainer(
 )
 
 trainer.train()
-trainer.save_model("GPyT")
+trainer.save_model("GPyT_3")

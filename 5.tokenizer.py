@@ -2,7 +2,7 @@ from tokenizers import ByteLevelBPETokenizer
 from transformers import GPT2Tokenizer
 
 paths = ['code_text_data.txt']
-TRAIN_BASE = False
+TRAIN_BASE = True
 
 if TRAIN_BASE:
     tokenizer = ByteLevelBPETokenizer()
