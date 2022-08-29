@@ -7,3 +7,6 @@ tokenizers==0.12.1
 tqdm==4.64.0
 transformers==4.22.0.dev0
 urllib3==1.26.11
+
+tensorflow~=2.5.0
+tensorflow-gpu~=2.5.0

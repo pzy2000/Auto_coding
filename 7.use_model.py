@@ -1,8 +1,12 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+import tensorflow as tf
+import transformers
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from time import sleep
-
 NEWLINECHAR = "<N>"
-
+transformers.logging.set_verbosity_error()
 tokenizer = GPT2Tokenizer.from_pretrained('tokenizer')
 
 tokenizer.add_special_tokens({
@@ -104,6 +108,10 @@ def stop_at_repeat(inp):
     return no_repeat
 
 
+def count(i):
+    return 1
+
+
 mode = input("请输入数字,选择启动方式：1、命令行格式 2、后台钩子模式:")
 
 
@@ -126,5 +134,6 @@ elif mode == "2":
         except RuntimeError:
             pass
         sleep(5)
+        os.system('cls')
 
 

