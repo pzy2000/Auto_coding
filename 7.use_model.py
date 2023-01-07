@@ -19,7 +19,7 @@ tokenizer.add_special_tokens({
     "pad_token": "<pad>",
     "mask_token": "<mask>"
 })
-model = GPT2LMHeadModel.from_pretrained("/root/AUTOCoder/GPyT_3/checkpoint-2500").to("cpu")
+model = GPT2LMHeadModel.from_pretrained("/root/AUTOCoder/GPyT_3/checkpoint-2500").to("cuda")
 
 
 def encode_newlines(inp):
@@ -61,7 +61,7 @@ def generate(inp, maxlength=100):
     """
     inp = encode_newlines(inp)
     newline_count = inp.count(NEWLINECHAR)
-    input_ids = tokenizer.encode(inp, return_tensors="pt").to("cpu")
+    input_ids = tokenizer.encode(inp, return_tensors="pt").to("cuda")
     model_output = model.generate(
         input_ids,
         max_length=maxlength,
