@@ -57,29 +57,13 @@ Input to the model is code, up to the context length of 1024.
 test.py记录用户的键盘输入，并实时存入keyboard.txt，use_model.py异步读取txt中的内容，并通过训练好的模型进行预测。
 
 # Here's a quick example of using this model:
-```python
-from transformers import AutoTokenizer, AutoModelWithLMHead
-
-tokenizer = AutoTokenizer.from_pretrained("Sentdex/GPyT")
-model = AutoModelWithLMHead.from_pretrained("Sentdex/GPyT")
-
-'''copy and paste some code in here'''
-inp = """import"""
-
-newlinechar = "<N>"
-converted = inp.replace("\n", newlinechar)
-tokenized = tokenizer.encode(converted, return_tensors='pt')
-resp = model.generate(tokenized)
-
-decoded = tokenizer.decode(resp[0])
-reformatted = decoded.replace("<N>","\n")
-
-print(reformatted)
+```c++
+    #include<iostream>
 ```
 # Should produce:
-```python
-import numpy as np
-import pytest
-
-import pandas as pd
+```c++
+    #include<iostream>
+    using namespace std;
+    
+    int main() {
 ```
