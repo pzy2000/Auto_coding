@@ -1,14 +1,17 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-import tensorflow as tf
+# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+# import tensorflow as tf
 import transformers
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+# tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from time import sleep
+
 NEWLINECHAR = "<N>"
 transformers.logging.set_verbosity_error()
 tokenizer = GPT2Tokenizer.from_pretrained('tokenizer')
+import os
 
+os.environ["USE_TORCH"] = "True"
 tokenizer.add_special_tokens({
     "eos_token": "</s>",
     "bos_token": "<s>",
@@ -16,7 +19,7 @@ tokenizer.add_special_tokens({
     "pad_token": "<pad>",
     "mask_token": "<mask>"
 })
-model = GPT2LMHeadModel.from_pretrained("GPyT_3/checkpoint-96500").to("cuda")
+model = GPT2LMHeadModel.from_pretrained("/root/AUTOCoder/GPyT_3/checkpoint-2200").to("cpu")
 
 
 def encode_newlines(inp):
@@ -58,14 +61,14 @@ def generate(inp, maxlength=100):
     """
     inp = encode_newlines(inp)
     newline_count = inp.count(NEWLINECHAR)
-    input_ids = tokenizer.encode(inp, return_tensors="pt").to("cuda")
+    input_ids = tokenizer.encode(inp, return_tensors="pt").to("cpu")
     model_output = model.generate(
         input_ids,
         max_length=maxlength,
         num_beams=5,
         temperature=0.7,
         no_repeat_ngram_size=5,
-        num_return_sequence=3,
+        # num_return_sequence=3,
         return_dict_in_generate=True,
         output_scores=True)
     return model_output, newline_count
@@ -114,7 +117,6 @@ def count(i):
 
 mode = input("请输入数字,选择启动方式：1、命令行格式 2、后台钩子模式:")
 
-
 if mode == "1":
     while True:
         try:
@@ -135,5 +137,3 @@ elif mode == "2":
             pass
         sleep(5)
         os.system('cls')
-
-
