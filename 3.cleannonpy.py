@@ -2,14 +2,14 @@ import os
 import time
 from tqdm import tqdm
 
-d = "D:/repos"
+d = "/root/repos_qt"
 for dirpath, dirnames, filenames in tqdm(os.walk(d)):
-    '''print(dirpath)
+    print(dirpath)
     print(dirnames)
-    print(filenames)'''
+    print(filenames)
     for f in filenames:
         full_path = os.path.join(dirpath, f)
-        if full_path.endswith(".py"):
+        if full_path.endswith(".cpp"):
             pass
         else:
             if d in full_path:
