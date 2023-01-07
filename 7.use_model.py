@@ -19,7 +19,7 @@ tokenizer.add_special_tokens({
     "pad_token": "<pad>",
     "mask_token": "<mask>"
 })
-model = GPT2LMHeadModel.from_pretrained("/root/AUTOCoder/GPyT_3/checkpoint-2200").to("cpu")
+model = GPT2LMHeadModel.from_pretrained("/root/AUTOCoder/GPyT_3/checkpoint-2500").to("cpu")
 
 
 def encode_newlines(inp):
