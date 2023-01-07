@@ -38,7 +38,7 @@ Input to the model is code, up to the context length of 1024.
 # 效果图
 <p align="center">
   <a>
-    <img src="https://raw.githubusercontent.com/pzy2000/Auto_coding/master/album/GPT-2.png">
+    <img src="https://raw.githubusercontent.com/pzy2000/Auto_coding/master/album/gpt-cpp.png">
   </a>
 </p>
 
