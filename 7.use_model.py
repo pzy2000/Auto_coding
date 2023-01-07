@@ -62,16 +62,20 @@ def generate(inp, maxlength=100):
     inp = encode_newlines(inp)
     newline_count = inp.count(NEWLINECHAR)
     input_ids = tokenizer.encode(inp, return_tensors="pt").to("cuda")
-    model_output = model.generate(
-        input_ids,
-        max_length=maxlength,
-        num_beams=5,
-        temperature=0.7,
-        no_repeat_ngram_size=5,
-        # num_return_sequence=3,
-        return_dict_in_generate=True,
-        output_scores=True)
-    return model_output, newline_count
+    try:
+        model_output = model.generate(
+            input_ids,
+            max_length=maxlength,
+            num_beams=5,
+            temperature=1,
+            no_repeat_ngram_size=5,
+            # num_return_sequence=3,
+            return_dict_in_generate=True,
+            output_scores=True)
+        return model_output, newline_count
+    except IndexError as e:
+        # print(e)
+        pass
 
 
 def auto_complete(inp, maxlength=100):
@@ -84,10 +88,14 @@ def auto_complete(inp, maxlength=100):
     Returns:
         模型生成的新代码
     """
-    model_output, _ = generate(inp, maxlength)
-    sequence = model_output['sequences'][0]
-    decoded = decode_newlines(tokenizer.decode(sequence))
-    return decoded
+    try:
+        model_output, _ = generate(inp, maxlength)
+        sequence = model_output['sequences'][0]
+        decoded = decode_newlines(tokenizer.decode(sequence))
+        return decoded
+    except TypeError as e:
+        # print("TypeError:", e)
+        return ""
 
 
 def stop_at_repeat(inp):
@@ -101,7 +109,7 @@ def stop_at_repeat(inp):
 
     """
     model_output = generate(inp)
-    lines = model_output.splitlines(True)
+    lines = model_output['sequences'].splitlines(True)
     no_repeat = ""
     for line in lines:
         if no_repeat.count(line) == 0 or line == "\n":
@@ -122,8 +130,11 @@ if mode == "1":
         try:
             inpu = input("> ")
             predict = auto_complete(inpu)
+            predict = predict.replace("N>", "\n")
             print(predict)
         except RuntimeError:
+            pass
+        except IndexError:
             pass
 
 elif mode == "2":
