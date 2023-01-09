@@ -15,8 +15,8 @@ with open("token.txt", "r") as f:
     access_token = f.read()
 g = Github(access_token)
 print(g.get_user())
-end_time = time.time() - 86400
-start_time = end_time - 864000
+end_time = time.time() - 86400000
+start_time = end_time - 8640000
 
 for i in range(5):
     start_time_str = datetime.utcfromtimestamp(start_time).strftime("%Y-%m-%d")

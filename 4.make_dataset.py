@@ -3,7 +3,7 @@ from tqdm import tqdm
 
 MAX_CHAR_LENGTH = 512
 MIN_CHAR_LENGTH = 256
-d = "/root/repos_qt"
+d = "G:/repos_qt"
 NEWLINECHAR = "<N>"
 print("开始读取文件目录:")
 full_paths = []
@@ -21,7 +21,7 @@ with open("code_text_data.txt", "a") as f:
             with open(fpath, 'r', encoding='utf-8') as fuck:
                 data = fuck.read()
             if "Copyright" in data:
-                print(data)
+                # print(data)
                 continue
             fd = data.replace("\n", NEWLINECHAR)
             if 100 < len(data) <= MAX_CHAR_LENGTH:

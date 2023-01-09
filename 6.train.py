@@ -37,7 +37,8 @@ config = GPT2Config(
     pad_token=tokenizer.pad_token_id,
     mask_token=tokenizer.mask_token_id
 )
-model = GPT2LMHeadModel(config)
+# model = GPT2LMHeadModel(config)  # 从头训练
+model = GPT2LMHeadModel.from_pretrained("GPyT_3/checkpoint-14000").to("cuda")  # 接续训练
 data = load_dataset("text", data_files=paths)
 
 print('successfully loaded dataset!')
@@ -58,19 +59,21 @@ def encode(lines):
 
 
 data.set_transform(encode)
+print(data)
 data = data['train']
+
 
 data_collator = DataCollatorForLanguageModeling(
     tokenizer=tokenizer, mlm=True, mlm_probability=0.15
 )
 
 training_args = TrainingArguments(
-    output_dir="GPyT_3",
-    overwrite_output_dir=True,
-    num_train_epochs=7,
+    output_dir="GPyT_3/",
+    overwrite_output_dir=False,
+    num_train_epochs=20,
     per_device_train_batch_size=10,
     save_steps=100,
-    save_total_limit=2,
+    save_total_limit=5,
     prediction_loss_only=True,
     remove_unused_columns=False,
 )
@@ -79,7 +82,7 @@ trainer = Trainer(
     model=model,
     args=training_args,
     data_collator=data_collator,
-    train_dataset=data,
+    train_dataset=data
 )
 
 trainer.train()

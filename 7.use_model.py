@@ -19,7 +19,8 @@ tokenizer.add_special_tokens({
     "pad_token": "<pad>",
     "mask_token": "<mask>"
 })
-model = GPT2LMHeadModel.from_pretrained("/root/AUTOCoder/GPyT_3/checkpoint-2500").to("cuda")
+# model = GPT2LMHeadModel.from_pretrained("/home/ise/pzy/AUTOCoder/GPyT_3/checkpoint-2500").to("cuda")
+model = GPT2LMHeadModel.from_pretrained("GPyT_3/checkpoint-12500").to("cuda")
 
 
 def encode_newlines(inp):
@@ -48,34 +49,18 @@ def decode_newlines(inp):
     return inp.replace(NEWLINECHAR, "\n")
 
 
-def generate(inp, maxlength=100):
-    """
+def generate(code, max_length=100):
+    '''Takes input code, replaces newline chars with <N>,
+    tokenizes, feeds thru model, decodes,
+    then reformats the newlines back in'''
+    newlinechar = "<N>"
+    converted = code.replace("\n", newlinechar)
+    tokenized = tokenizer.encode(converted, return_tensors='pt').to("cuda")
+    resp = model.generate(tokenized, max_length=max_length).to("cuda")
 
-    Args:
-        inp: 用户输入的代码段
-        maxlength: 处理字符的上限,默认为100
-
-    Returns:
-        模型生成的新代码 和 新代码的行数
-
-    """
-    inp = encode_newlines(inp)
-    newline_count = inp.count(NEWLINECHAR)
-    input_ids = tokenizer.encode(inp, return_tensors="pt").to("cuda")
-    try:
-        model_output = model.generate(
-            input_ids,
-            max_length=maxlength,
-            num_beams=5,
-            temperature=1,
-            no_repeat_ngram_size=5,
-            # num_return_sequence=3,
-            return_dict_in_generate=True,
-            output_scores=True)
-        return model_output, newline_count
-    except IndexError as e:
-        # print(e)
-        pass
+    decoded = tokenizer.decode(resp[0])
+    reformatted = decoded.replace("<N>", "\n")
+    return reformatted
 
 
 def auto_complete(inp, maxlength=100):
@@ -89,7 +74,7 @@ def auto_complete(inp, maxlength=100):
         模型生成的新代码
     """
     try:
-        model_output, _ = generate(inp, maxlength)
+        model_output = generate(inp, maxlength)
         sequence = model_output['sequences'][0]
         decoded = decode_newlines(tokenizer.decode(sequence))
         return decoded
@@ -98,39 +83,58 @@ def auto_complete(inp, maxlength=100):
         return ""
 
 
-def stop_at_repeat(inp):
-    """
-
-    Args:
-        inp: 用户输入的代码段
-
-    Returns:
-        模型生成的新代码(不会带有重复段落)
-
-    """
-    model_output = generate(inp)
-    lines = model_output['sequences'].splitlines(True)
+def stop_at_repeat(model_out):
+    lines = model_out.splitlines(True)
     no_repeat = ""
-    for line in lines:
-        if no_repeat.count(line) == 0 or line == "\n":
-            no_repeat += line
+    for l in lines:
+        if no_repeat.count(l) == 0 or l == "\n":
+            no_repeat += l
         else:
             return no_repeat
     return no_repeat
 
 
+def next_line_only(original, model_out):
+    orig_nl = original.count("\n")
+    one_more_lines = [l for l in model_out.splitlines(True)][:orig_nl + 1]
+    one_more_line = "".join(one_more_lines)
+    return one_more_line
+
+
 def count(i):
-    return 1
+    return 2
 
 
-mode = input("请输入数字,选择启动方式：1、命令行格式 2、后台钩子模式:")
+def postprocess(origin_output):
+    processed_output = origin_output.replace("N>", "\n")
+    return processed_output
 
-if mode == "1":
+
+mode = input("请输入数字,选择启动方式：0、命令行格式（加强版）1、命令行格式 2、后台钩子模式: 3、生成器模式 4、多段预输入模式")
+
+if mode == "0":
     while True:
         try:
-            inpu = input("> ")
-            predict = auto_complete(inpu)
-            predict = predict.replace("N>", "\n")
+            inpu = input(">>> ")
+            m = generate(inpu)
+            predict = stop_at_repeat(m)
+            predict = postprocess(predict)
+            print("Autocompleted:")
+            print()
+            print(predict)
+        except RuntimeError:
+            pass
+        except IndexError:
+            pass
+
+elif mode == "1":
+    while True:
+        try:
+            inpu = input(">>> ")
+            predict = generate(inpu)
+            predict = postprocess(predict)
+            print("Autocompleted:")
+            print()
             print(predict)
         except RuntimeError:
             pass
@@ -142,9 +146,38 @@ elif mode == "2":
         try:
             with open("keyboard.txt", 'r') as f:
                 inpu = f.read()
-            predict = auto_complete(inpu)
+            predict = stop_at_repeat(inpu)
             print(predict)
         except RuntimeError:
             pass
         sleep(5)
         os.system('cls')
+
+elif mode == "3":
+    while True:
+        try:
+            inpu = input(">>> ")
+            m = generate(inpu)
+            predict = next_line_only(inpu, m)
+            predict = postprocess(predict)
+            print("Autocompleted:")
+            print()
+            print(predict)
+        except RuntimeError:
+            pass
+        except IndexError:
+            pass
+
+elif mode == "4":
+    try:
+        inpu = '''#include "mainwindow.h"
+#include <QApplication>'''
+        predict = generate(inpu)
+        predict = postprocess(predict)
+        print("Autocompleted:")
+        print()
+        print(predict)
+    except RuntimeError:
+        pass
+    except IndexError:
+        pass
