@@ -178,3 +178,5 @@ cython_debug/
 /GPyT_1/
 /repos/
 !/code_text_data.txt
+/testgpu.py
+/code_text_data.zip
