@@ -180,3 +180,4 @@ cython_debug/
 !/code_text_data.txt
 /testgpu.py
 /code_text_data.zip
+/temp.py

@@ -9,7 +9,6 @@ from time import sleep
 NEWLINECHAR = "<N>"
 transformers.logging.set_verbosity_error()
 tokenizer = GPT2Tokenizer.from_pretrained('tokenizer')
-import os
 
 os.environ["USE_TORCH"] = "True"
 tokenizer.add_special_tokens({
@@ -20,7 +19,7 @@ tokenizer.add_special_tokens({
     "mask_token": "<mask>"
 })
 # model = GPT2LMHeadModel.from_pretrained("/home/ise/pzy/AUTOCoder/GPyT_3/checkpoint-2500").to("cuda")
-model = GPT2LMHeadModel.from_pretrained("GPyT_3/checkpoint-12500").to("cuda")
+model = GPT2LMHeadModel.from_pretrained("GPyT_3/").to("cuda")
 
 
 def encode_newlines(inp):
@@ -50,16 +49,23 @@ def decode_newlines(inp):
 
 
 def generate(code, max_length=100):
-    '''Takes input code, replaces newline chars with <N>,
+    """Takes input code, replaces newline chars with <N>,
     tokenizes, feeds thru model, decodes,
-    then reformats the newlines back in'''
+    then reformats the newlines back in"""
     newlinechar = "<N>"
     converted = code.replace("\n", newlinechar)
     tokenized = tokenizer.encode(converted, return_tensors='pt').to("cuda")
+    # resp = model.generate(tokenized, max_length=max_length, num_beams=3, num_return_sequences=3).to("cuda")
     resp = model.generate(tokenized, max_length=max_length).to("cuda")
-
     decoded = tokenizer.decode(resp[0])
     reformatted = decoded.replace("<N>", "\n")
+    '''l = len(resp)
+    reformatted = []
+    for i in range(0, l):
+        decoded = tokenizer.decode(resp[i]) + "<N>"
+        reformatted.append(decoded.replace("<N>", "\n"))
+    ans = "".join(reformatted)'''
+
     return reformatted
 
 
@@ -90,7 +96,8 @@ def stop_at_repeat(model_out):
         if no_repeat.count(l) == 0 or l == "\n":
             no_repeat += l
         else:
-            return no_repeat
+            # print(l)
+            pass
     return no_repeat
 
 
@@ -107,13 +114,14 @@ def count(i):
 
 def postprocess(origin_output):
     processed_output = origin_output.replace("N>", "\n")
+    processed_output = processed_output.replace(">#include", "\n#include")
     return processed_output
 
 
-mode = input("请输入数字,选择启动方式：0、命令行格式（加强版）1、命令行格式 2、后台钩子模式: 3、生成器模式 4、多段预输入模式")
-
-if mode == "0":
-    while True:
+while True:
+    mode = input(
+        "请输入数字,选择启动方式：0、命令行格式（加强版）1、命令行格式 2、后台钩子模式: 3、生成器模式 4、多段预输入模式")
+    if mode == "0":
         try:
             inpu = input(">>> ")
             m = generate(inpu)
@@ -127,8 +135,7 @@ if mode == "0":
         except IndexError:
             pass
 
-elif mode == "1":
-    while True:
+    elif mode == "1":
         try:
             inpu = input(">>> ")
             predict = generate(inpu)
@@ -141,8 +148,7 @@ elif mode == "1":
         except IndexError:
             pass
 
-elif mode == "2":
-    while True:
+    elif mode == "2":
         try:
             with open("keyboard.txt", 'r') as f:
                 inpu = f.read()
@@ -153,8 +159,7 @@ elif mode == "2":
         sleep(5)
         os.system('cls')
 
-elif mode == "3":
-    while True:
+    elif mode == "3":
         try:
             inpu = input(">>> ")
             m = generate(inpu)
@@ -168,16 +173,20 @@ elif mode == "3":
         except IndexError:
             pass
 
-elif mode == "4":
-    try:
-        inpu = '''#include "mainwindow.h"
-#include <QApplication>'''
-        predict = generate(inpu)
-        predict = postprocess(predict)
-        print("Autocompleted:")
-        print()
-        print(predict)
-    except RuntimeError:
-        pass
-    except IndexError:
-        pass
+    elif mode == "4":
+        try:
+            inpu = '''#include <QtCore/QCoreApplication>
+#include <QtCore/QDebug>
+int main(int argc, char** argv)
+{
+    QCoreApplication app(argc, argv);'''
+            predict = generate(inpu)
+            predict = stop_at_repeat(predict)
+            predict = postprocess(predict)
+            print("Autocompleted:")
+            print()
+            print(predict)
+        except RuntimeError:
+            pass
+        except IndexError:
+            pass

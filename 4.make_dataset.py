@@ -18,21 +18,28 @@ print("开始写入数据集:")
 with open("code_text_data.txt", "a") as f:
     for fpath in tqdm(full_paths):
         try:
-            with open(fpath, 'r', encoding='utf-8') as fuck:
+            with open(fpath, 'r') as fuck:
                 data = fuck.read()
-            if "Copyright" in data:
-                # print(data)
-                continue
             fd = data.replace("\n", NEWLINECHAR)
             if 100 < len(data) <= MAX_CHAR_LENGTH:
+                if "Copyright" in fd:
+                    print("FUCKER: ", fd)
+                    continue
                 f.write(fd + '\n')
+                print(fd + '\n')
             else:
                 sd = data.split(f"{NEWLINECHAR}{NEWLINECHAR}")
                 substring = ""
                 for split in sd:
                     substring += split + f"{NEWLINECHAR}{NEWLINECHAR}"
                     if MIN_CHAR_LENGTH <= len(substring) <= MAX_CHAR_LENGTH:
+                        if "Copyright" in substring:
+                            print("FUCKER: ", substring)
+                            continue
                         f.write(substring + "\n")
+                        print(substring + "\n")
                         substring = ""
+                    # 处理>512的情况!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         except Exception as e:
-            print(str(e))
+            pass
+            # print(str(e))
